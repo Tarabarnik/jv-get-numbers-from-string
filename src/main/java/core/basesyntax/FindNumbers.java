@@ -1,7 +1,5 @@
 package core.basesyntax;
 
-import java.util.LinkedList;
-
 public class FindNumbers {
 
     /**
@@ -15,28 +13,12 @@ public class FindNumbers {
      * числа 96, 18, 26 и 0.</p>
      */
     public int[] getAllNumbers(String text) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            if (Character.isDigit(c) || c == '-') {
-                builder.append(c);
-            } else {
-                builder.append(' ');
-            }
+        text = text.replaceAll("[^-0-9]+", " ").trim();
+        String[] numbers = text.split("\\s");
+        int[] result = new int[numbers.length];
+        for (int i = 0; i < numbers.length; i++) {
+            result[i] = Integer.parseInt(numbers[i]) * 2;
         }
-        builder.append(' ');
-        LinkedList<Integer> res = new LinkedList<Integer>();
-        for (int i = 0; i < builder.length();i++) {
-            if (builder.charAt(i) != ' ') {
-                int nextWhitespace = builder.indexOf(" ", i);
-                res.add(Integer.parseInt(builder.substring(i, nextWhitespace)));
-                i = nextWhitespace;
-            }
-        }
-        int[] arr = new int[res.size()];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = res.pop() * 2;
-        }
-        return arr;
+        return result;
     }
 }
